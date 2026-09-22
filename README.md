@@ -8,17 +8,17 @@ This project implements and compares lightweight convolutional neural networks f
 
 The dataset contains 9 classes totaling 4,752 images:
 
-| Class | Count |
-|---|---|
-| Cardboard | 461 |
-| Food Organics | 411 |
-| Glass | 420 |
-| Metal | 790 |
-| Miscellaneous Trash | 495 |
-| Paper | 500 |
-| Plastic | 921 |
-| Textile Trash | 318 |
-| Vegetation | 436 |
+| Class               | Count |
+| ------------------- | ----- |
+| Cardboard           | 461   |
+| Food Organics       | 411   |
+| Glass               | 420   |
+| Metal               | 790   |
+| Miscellaneous Trash | 495   |
+| Paper               | 500   |
+| Plastic             | 921   |
+| Textile Trash       | 318   |
+| Vegetation          | 436   |
 
 There is moderate class imbalance (~3:1 max ratio), handled via stratified splitting and class-weighted loss.
 
@@ -27,7 +27,8 @@ There is moderate class imbalance (~3:1 max ratio), handled via stratified split
 **License:** CC BY-NC-SA 4.0 (Attribution-NonCommercial-ShareAlike). This project and any derived outputs follow the same non-commercial, share-alike terms.
 
 **Citation:**
-> Single, S.; Iranmanesh, S.; Raad, R. RealWaste: A Novel Real-Life Data Set for Landfill Waste Classification Using Deep Learning. *Information* 2023, 14, 633. https://doi.org/10.3390/info14120633
+
+> Single, S.; Iranmanesh, S.; Raad, R. RealWaste: A Novel Real-Life Data Set for Landfill Waste Classification Using Deep Learning. _Information_ 2023, 14, 633. https://doi.org/10.3390/info14120633
 
 ## Models
 
@@ -55,7 +56,7 @@ Key dependencies: TensorFlow 2.21, NumPy, Pandas, scikit-learn, Matplotlib, Pill
 ## Repository Structure
 
 ```
-├── data/              # raw and processed dataset (gitignored)
+├── data/              # raw, resized_raw and processed manifest (gitignored)
 ├── notebooks/         # exploratory analysis
 ├── src/
 │   ├── data_prep.py   # resizing, stratified split, manifest generation
@@ -68,10 +69,12 @@ Key dependencies: TensorFlow 2.21, NumPy, Pandas, scikit-learn, Matplotlib, Pill
 └── README.md
 ```
 
+If you are training from scratch add the downloaded dataset to data/ folder and run data_prep.py inside the venv.
+
 ## Status
 
 🚧 In progress
 
 ## Author
 
-False Negatives
+False Negatives -- ENTC

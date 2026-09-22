@@ -3,20 +3,43 @@
 from pathlib import Path
 import pandas as pd
 
+from PIL import Image
+
 from sklearn.model_selection import train_test_split
 
 DATA_DIR = Path("data/RealWaste")
+TARGET_DIR = Path("data/RealWaste_resized")
+TARGET_SIZE = (64,64)
 
-records = []
+# resizing logic
 for class_folder in DATA_DIR.iterdir():
     if class_folder.is_dir():
         print(class_folder.name) # all the folders (classes)
+        target_class_dir = TARGET_DIR / class_folder.name
+        target_class_dir.mkdir(parents=True, exist_ok=True)
+
         for img_path in class_folder.iterdir():
             #print(class_folder.name, img_path) # to check all image files are includes and in jpg extension
-            records.append({
-                "filepath": str(img_path),
-                "label": class_folder.name
-            }) 
+            if img_path.is_file():
+                try:
+                    with Image.open(img_path) as img:
+                        img_resized = img.resize(TARGET_SIZE) #resizing command
+                        save_path = target_class_dir / img_path.name
+                        img_resized.save(save_path)
+                except Exception as e:
+                    print(f" {e} Error occured during resizing")
+
+#in order to create the splited manifest I created an dataframe woth labeled data from resized folders 
+records = []
+for class_dir in TARGET_DIR.iterdir():
+    if class_dir.is_dir():
+        class_name = class_dir.name
+        for img_path in class_dir.iterdir():
+            if img_path.is_file():
+                records.append({
+                    "filepath": str(img_path),
+                    "label": class_name
+                }) 
 
 df = pd.DataFrame(records)
 
