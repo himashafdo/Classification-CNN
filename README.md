@@ -1,12 +1,33 @@
-# Resource-Constrained CNN for Edge Image Classification 
+# Resource-Constrained CNN for Edge Image Classification
 
 This project implements and compares lightweight convolutional neural networks for image classification under strict resource constraints (≤100,000 trainable parameters), designed to emulate deployment on embedded/edge devices such as microcontrollers or Raspberry Pi.
 
 ## Dataset
 
-**RealWaste** — real photographs of waste items captured at the point of reception in a landfill environment, released at 524×524 resolution. Images are downscaled to a maximum of 64×64 pixels to emulate a low-resource sensor input. The dataset contains 9 classes (Cardboard, Food Organics, Glass, Metal, Miscellaneous Trash, Paper, Plastic, Textile Trash, Vegetation) totaling 4,752 images, with moderate class imbalance (~3:1 max ratio) handled via stratified splitting and class-weighted loss.
+**RealWaste** — real photographs of waste items captured at the point of reception at the Whyte's Gully Waste and Resource Recovery facility in Wollongong, NSW, Australia, released at 524×524 resolution. Images are downscaled to a maximum of 64×64 pixels to emulate a low-resource sensor input.
+
+The dataset contains 9 classes totaling 4,752 images:
+
+| Class | Count |
+|---|---|
+| Cardboard | 461 |
+| Food Organics | 411 |
+| Glass | 420 |
+| Metal | 790 |
+| Miscellaneous Trash | 495 |
+| Paper | 500 |
+| Plastic | 921 |
+| Textile Trash | 318 |
+| Vegetation | 436 |
+
+There is moderate class imbalance (~3:1 max ratio), handled via stratified splitting and class-weighted loss.
 
 [Dataset link](https://archive.ics.uci.edu/dataset/908/realwaste)
+
+**License:** CC BY-NC-SA 4.0 (Attribution-NonCommercial-ShareAlike). This project and any derived outputs follow the same non-commercial, share-alike terms.
+
+**Citation:**
+> Single, S.; Iranmanesh, S.; Raad, R. RealWaste: A Novel Real-Life Data Set for Landfill Waste Classification Using Deep Learning. *Information* 2023, 14, 633. https://doi.org/10.3390/info14120633
 
 ## Models
 
@@ -34,7 +55,6 @@ Both models are also compared against two fine-tuned pre-trained lightweight arc
 ## Status
 
 🚧 In progress
-
 
 ## Author
 
