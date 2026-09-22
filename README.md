@@ -6,6 +6,8 @@ This project implements and compares lightweight convolutional neural networks f
 
 **RealWaste** — real photographs of waste items captured at the point of reception in a landfill environment, released at 524×524 resolution. Images are downscaled to a maximum of 64×64 pixels to emulate a low-resource sensor input. The dataset contains 9 classes (Cardboard, Food Organics, Glass, Metal, Miscellaneous Trash, Paper, Plastic, Textile Trash, Vegetation) totaling 4,752 images, with moderate class imbalance (~3:1 max ratio) handled via stratified splitting and class-weighted loss.
 
+[Dataset link](https://archive.ics.uci.edu/dataset/908/realwaste)
+
 ## Models
 
 - **Model A (Standard CNN):** Standard 2D convolutional layers interleaved with max-pooling.
@@ -36,4 +38,4 @@ Both models are also compared against two fine-tuned pre-trained lightweight arc
 
 ## Author
 
-False Negative
+False Negatives
