@@ -36,6 +36,22 @@ There is moderate class imbalance (~3:1 max ratio), handled via stratified split
 
 Both models are also compared against two fine-tuned pre-trained lightweight architectures designed for mobile/edge deployment.
 
+## Environment Setup
+
+Requires **Python 3.11 or 3.12** (TensorFlow does not yet support 3.13+ at time of writing).
+
+```bash
+# Create and activate a virtual environment
+py -3.11 -m venv venv
+venv\Scripts\Activate.ps1      # Windows PowerShell
+# source venv/bin/activate     # macOS/Linux
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+Key dependencies: TensorFlow 2.21, NumPy, Pandas, scikit-learn, Matplotlib, Pillow. See `requirements.txt` for the full pinned list.
+
 ## Repository Structure
 
 ```
