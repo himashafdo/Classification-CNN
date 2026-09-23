@@ -23,7 +23,7 @@ for class_folder in DATA_DIR.iterdir():
             if img_path.is_file():
                 try:
                     with Image.open(img_path) as img:
-                        img_resized = img.resize(TARGET_SIZE) #resizing command
+                        img_resized = img.resize(TARGET_SIZE, Image.LANCZOS) #resizing command
                         save_path = target_class_dir / img_path.name
                         img_resized.save(save_path)
                 except Exception as e:
