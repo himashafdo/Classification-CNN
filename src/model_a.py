@@ -1,17 +1,34 @@
+"""
+For the model A I was thinking to use 3 conv-pooling layers with 2x2 pooling.
+And filter amount will be 16, 32, 64 in each successive block, with each being a 
+3x3 filter.
+"""
+
+from tensorflow.keras import layers, models
 
 
+model_a = models.Sequential([
 
-from pathlib import Path
-import pandas as pd
+    #First convolutional layer with 16 filters and a 3x3 kernel
+    layers.Conv2D(16, (3,3), activation='relu', input_shape=(64,64,3), padding='same'),
+    #Maxpooling layer no.1 
+    layers.MaxPool2D((2,2)),
 
-from PIL import Image
+    #Second convolutional layer with 32 filters and a 3x3 kernel
+    layers.Conv2D(32, (3,3), activation='relu', padding='same'),
+    #Maxpooling layer no.2 
+    layers.MaxPool2D((2,2)),
 
-from sklearn.model_selection import train_test_split
+    #Third convolutional layer with 64 filters and a 3x3 kernel
+    layers.Conv2D(64, (3,3), activation='relu', padding='same'),
+    #Maxpooling layer no.3
+    layers.MaxPool2D((2,2)),
 
-DATA_DIR = Path("data/RealWaste")
-TARGET_DIR = Path("data/RealWaste_resized")
-TARGET_SIZE = (64,64)
+    #flattening to a 1D array 
+    layers.Flatten(),
 
-sample = next(TARGET_DIR.rglob("*.jpg"))
-with Image.open(sample) as img:
-    print("Sample image size:", img.size)
+    layers.Dense(9, activation='softmax')
+
+])
+
+model_a.summary()
