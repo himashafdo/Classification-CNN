@@ -7,9 +7,12 @@ from PIL import Image
 
 from sklearn.model_selection import train_test_split
 
+import shutil
+
 DATA_DIR = Path("data/RealWaste")
 TARGET_DIR = Path("data/RealWaste_resized")
 TARGET_SIZE = (64,64)
+SPLIT_DIR = Path("data/RealWast_split") # splitted and resized images also added to separate folders for future use
 
 # resizing logic
 for class_folder in DATA_DIR.iterdir():
@@ -84,6 +87,14 @@ test_df["split"] = "test"
 manifest = pd.concat([train_df, val_df, test_df], ignore_index=True)
 manifest.to_csv("data/manifest.csv", index=False)
 #final manifest that will be used to train the model
-
 print(manifest["split"].value_counts())
 print(f"\nManifest saved to data/manifest.csv ({len(manifest)} rows)")
+
+# saving splitted, resized images in subfolders
+for _, row in manifest.iterrows():
+    src_path = Path(row["filepath"])
+    split_class_dir = SPLIT_DIR / row["split"] / row["label"]
+    split_class_dir.mkdir(parents=True, exist_ok=True)
+    shutil.copy(src_path, split_class_dir / src_path.name)
+
+print(f"\nImages organized into {SPLIT_DIR}/train, /val, /test")
