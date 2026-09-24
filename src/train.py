@@ -52,3 +52,5 @@ history = model_a.fit(
     epochs = 30,
     class_weight=class_weights
 )
+
+model_a.save("results/model_a_version_1.keras")
