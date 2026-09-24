@@ -12,7 +12,7 @@ import shutil
 DATA_DIR = Path("data/RealWaste")
 TARGET_DIR = Path("data/RealWaste_resized")
 TARGET_SIZE = (64,64)
-SPLIT_DIR = Path("data/RealWast_split") # splitted and resized images also added to separate folders for future use
+SPLIT_DIR = Path("data/RealWaste_split") # splitted and resized images also added to separate folders for future use
 
 # resizing logic
 for class_folder in DATA_DIR.iterdir():
