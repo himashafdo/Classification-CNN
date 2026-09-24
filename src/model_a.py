@@ -25,7 +25,12 @@ model_a = models.Sequential([
     layers.MaxPool2D((2,2)),
 
     #flattening to a 1D array 
-    layers.Flatten(),
+    layers.GlobalAveragePooling2D(),
+
+    #added another hidden dense layer to see the reaction
+    layers.Dense(128, activation='relu'),
+    
+    
 
     layers.Dense(9, activation='softmax')
 
