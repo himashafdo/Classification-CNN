@@ -4,7 +4,7 @@ from tensorflow.keras.utils import image_dataset_from_directory
 from sklearn.utils.class_weight import compute_class_weight
 import numpy as np
 
-from model_a import model_a
+from model_b import model_b
 
 TRAIN_VAL_DATA_DIR = Path("data/RealWaste_split")
 IMG_SIZE = (64,64)
@@ -40,17 +40,17 @@ class_weights_array = compute_class_weight(
 class_weights = dict(enumerate(class_weights_array))
 print("Class weights:", class_weights)
 
-model_a.compile(
+model_b.compile(
     optimizer="adam",
     loss="sparse_categorical_crossentropy",
     metrics=["accuracy"]
 )
 
-history = model_a.fit(
+history = model_b.fit(
     train_ds,
     validation_data = val_ds,
     epochs = 30,
     class_weight=class_weights
 )
 
-model_a.save("results/model_a_version_1.keras")
+model_b.save("results/model_b_version_1.keras")
