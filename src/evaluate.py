@@ -16,7 +16,7 @@ TEST_DATA_DIR = Path("data/RealWaste_split/test")
 
 IMG_SIZE = (64, 64)
 BATCH_SIZE = 32
-MODEL_PATH = Path("results/model_a_version_1.keras")
+MODEL_PATH = Path("results/model_a_version_7.keras")
 RESULTS_DIR = Path("results")
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -64,7 +64,7 @@ cm = confusion_matrix(y_true, y_pred)
 
 plt.figure(figsize=(10, 8))
 plt.imshow(cm, interpolation='nearest', cmap=plt.cm.Blues)
-plt.title("Model A - Confusion Matrix")
+plt.title("Model A ver 7- Confusion Matrix")
 plt.colorbar()
 
 tick_marks = np.arange(len(class_names))
@@ -82,7 +82,7 @@ plt.ylabel('True Label')
 plt.xlabel('Predicted Label')
 plt.tight_layout()
 
-cm_path = RESULTS_DIR / "model_a_confusion_matrix.png"
+cm_path = RESULTS_DIR / "model_a_version_7_confusion_matrix.png"
 plt.savefig(cm_path)
 plt.close()
 print(f"Confusion matrix plot saved to {cm_path}")

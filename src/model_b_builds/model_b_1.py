@@ -4,7 +4,7 @@ from tensorflow.keras import layers, models
 
 model_b = models.Sequential([
 
-    layers.RandomFlip("horizontal"),
+    layers.RandomFlip("horizontal"), #due to reducint overfitting
     layers.RandomRotation(0.1),
     layers.RandomZoom(0.1),
 
