@@ -4,7 +4,7 @@ Training script for Model B. Same data, batch size, class weights and
 callbacks as train.py (Model A) so the A vs B comparison is fair.
 
 Extra things recorded here because the assignment asks for them:
-- training / validation loss curves  -> results/model_b_version_2_loss.png
+- training / validation loss curves  -> results/model_b_version_3_loss.png
 - training time per epoch            -> printed + saved in the history csv
 - model size on disk (KB)            -> printed at the end
 """
@@ -19,13 +19,13 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from model_b_builds.model_b_2 import model_b
+from model_b_builds.model_b_3 import model_b
 
 TRAIN_VAL_DATA_DIR = Path("data/RealWaste_split")
 IMG_SIZE = (64, 64)
 BATCH_SIZE = 64
 AUTOTUNE = tf.data.AUTOTUNE
-MODEL_PATH = Path("results/model_b_version_2.keras")
+MODEL_PATH = Path("results/model_b_version_3.keras")
 RESULTS_DIR = Path("results")
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -52,7 +52,7 @@ print("Class weights:", class_weights)
 train_ds = train_ds.cache().prefetch(AUTOTUNE)
 val_ds = val_ds.cache().prefetch(AUTOTUNE)
 
-# model_b is already compiled inside model_b_2.py with from_logits=True
+# model_b is already compiled inside model_b_3.py with from_logits=True
 # (the last layer outputs logits), so it is NOT recompiled here.
 
 
@@ -89,7 +89,7 @@ history = model_b.fit(
 hist_df = pd.DataFrame(history.history)
 hist_df["epoch_time_s"] = timer.epoch_times
 hist_df.index.name = "epoch"
-hist_df.to_csv(RESULTS_DIR / "model_b_version_2_history.csv")
+hist_df.to_csv(RESULTS_DIR / "model_b_version_3_history.csv")
 
 # first epoch includes graph tracing + dataset caching, so it is excluded
 print(f"\nMean time per epoch (excluding epoch 1): "
@@ -101,11 +101,11 @@ plt.plot(history.history["loss"], label="Training loss")
 plt.plot(history.history["val_loss"], label="Validation loss")
 plt.xlabel("Epoch")
 plt.ylabel("Loss")
-plt.title("Model B ver 2 - Training and Validation Loss")
+plt.title("Model B ver 3 - Training and Validation Loss")
 plt.legend()
 plt.grid(alpha=0.3)
 plt.tight_layout()
-plt.savefig(RESULTS_DIR / "model_b_version_2_loss.png")
+plt.savefig(RESULTS_DIR / "model_b_version_3_loss.png")
 plt.close()
 
 # model size on disk
@@ -113,7 +113,7 @@ plt.close()
 # rebuilding the model from its config gives a copy with no optimizer, so
 # saving it gives the deployable size for a fair comparison with Model A
 # (do the same for model_a_8)
-INFER_PATH = RESULTS_DIR / "model_b_version_2_inference.keras"
+INFER_PATH = RESULTS_DIR / "model_b_version_3_inference.keras"
 infer_model = tf.keras.Sequential.from_config(model_b.get_config())
 infer_model.set_weights(model_b.get_weights())
 infer_model.save(INFER_PATH)

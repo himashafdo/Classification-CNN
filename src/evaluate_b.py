@@ -16,7 +16,7 @@ TEST_DATA_DIR = Path("data/RealWaste_split/test")
 
 IMG_SIZE = (64, 64)
 BATCH_SIZE = 32
-MODEL_PATH = Path("results/model_b_version_2.keras")
+MODEL_PATH = Path("results/model_b_version_3.keras")
 RESULTS_DIR = Path("results")
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -57,7 +57,7 @@ report = classification_report(y_true, y_pred, target_names=class_names, digits=
 print(report)
 
 # Save text report
-report_path = RESULTS_DIR / "model_b_version_2_classification_report.txt"
+report_path = RESULTS_DIR / "model_b_version_3_classification_report.txt"
 report_path.write_text(report)
 print(f"Classification report saved to {report_path}")
 
@@ -66,7 +66,7 @@ cm = confusion_matrix(y_true, y_pred)
 
 plt.figure(figsize=(10, 8))
 plt.imshow(cm, interpolation='nearest', cmap=plt.cm.Blues)
-plt.title("Model B ver 2 - Confusion Matrix")
+plt.title("Model B ver 3 - Confusion Matrix")
 plt.colorbar()
 
 tick_marks = np.arange(len(class_names))
@@ -84,7 +84,7 @@ plt.ylabel('True Label')
 plt.xlabel('Predicted Label')
 plt.tight_layout()
 
-cm_path = RESULTS_DIR / "model_b_version_2_confusion_matrix.png"
+cm_path = RESULTS_DIR / "model_b_version_3_confusion_matrix.png"
 plt.savefig(cm_path)
 plt.close()
 print(f"Confusion matrix plot saved to {cm_path}")
