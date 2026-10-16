@@ -27,9 +27,7 @@ from sklearn.utils.class_weight import compute_class_weight
 from tensorflow import keras
 from tensorflow.keras import callbacks, layers
 
-# ----------------------------------------------------------------------------
-# 1. Settings
-# ----------------------------------------------------------------------------
+
 SEED = 42
 keras.utils.set_random_seed(SEED)           # reproducible weight init / shuffling
 
@@ -45,7 +43,7 @@ ALPHA = 1.0               # MobileNet width multiplier (1.0 = full width)
 HEAD_EPOCHS = 10          # phase 1: backbone frozen, train only the new classifier head
 FINE_TUNE_EPOCHS = 30     # phase 2: unfreeze (most of) the backbone (early stopping may cut it short)
 HEAD_LR = 1e-3            # new randomly-initialised head -> normal Adam LR
-FINE_TUNE_LR = 1e-4       # pretrained weights -> 10x smaller LR so we don't wreck them
+FINE_TUNE_LR = 1e-4       # pretrained weights are 10x smaller LR so we don't wreck them
 FREEZE_FRACTION = 0.3     # in phase 2 keep the earliest 30% of backbone layers frozen
 
 BACKBONES = {
@@ -72,7 +70,6 @@ class_names = train_ds.class_names
 n_classes = len(class_names)
 print("Classes:", class_names)
 
-# Class weights: same idea as the teammate's train.py (rare classes count more in the loss)
 train_labels = np.concatenate([y.numpy() for _, y in train_ds])
 cw = compute_class_weight("balanced", classes=np.arange(n_classes), y=train_labels)
 class_weights = dict(enumerate(cw))
@@ -85,9 +82,7 @@ val_ds = val_ds.cache().prefetch(AUTOTUNE)
 test_ds = test_ds.cache().prefetch(AUTOTUNE)
 
 
-# ----------------------------------------------------------------------------
-# 3. Model builder
-# ----------------------------------------------------------------------------
+#building the model
 def build_model(name):
     """augmentation -> rescale to [-1,1] -> pretrained backbone -> GAP -> dropout -> logits"""
     augmentation = keras.Sequential(
@@ -111,7 +106,6 @@ def build_model(name):
     inputs = keras.Input(shape=IMG_SIZE + (3,))
     x = augmentation(inputs)
     # MobileNetV1 was pretrained on inputs scaled to [-1, 1]
-    # (Model A used 1/255 -> [0, 1]; feeding the wrong range hurts fine-tuning a lot)
     x = layers.Rescaling(1.0 / 127.5, offset=-1.0)(x)
     x = base(x, training=False)   # training=False keeps BatchNorm in inference mode (see notes)
     x = layers.GlobalAveragePooling2D()(x)
@@ -142,14 +136,14 @@ class EpochTimer(callbacks.Callback):
         self.times.append(time.perf_counter() - self._t0)
 
 
-# ----------------------------------------------------------------------------
-# 4. Two-phase training
-# ----------------------------------------------------------------------------
+
+#Two-phase training
+
 def train_two_phase(name):
     model, base = build_model(name)
     timer = EpochTimer()
 
-    # ---- Phase 1: train only the new head --------------------------------------
+    # training only the new head
     print(f"\n=== {name}: phase 1 (frozen backbone) ===")
     compile_model(model, HEAD_LR)
     h1 = model.fit(
@@ -159,7 +153,7 @@ def train_two_phase(name):
         verbose=2,
     )
 
-    # ---- Phase 2: unfreeze and fine-tune with a small LR ------------------------
+    # unfreeze and fine-tune with a small LR
     print(f"\n=== {name}: phase 2 (fine-tuning) ===")
     base.trainable = True
     n_freeze = int(len(base.layers) * FREEZE_FRACTION)
@@ -200,9 +194,7 @@ def plot_curves(history, phase_boundary, name):
     plt.close(fig)
 
 
-# ----------------------------------------------------------------------------
-# 5. Evaluation helpers
-# ----------------------------------------------------------------------------
+#evaluation and metrics
 def evaluate_on_test(model, name):
     y_true = np.concatenate([y.numpy() for _, y in test_ds])
     y_pred = np.argmax(model.predict(test_ds, verbose=0), axis=1)
@@ -258,9 +250,9 @@ def host_latency_ms(model, n=200):
     return (time.perf_counter() - t0) / n * 1000.0
 
 
-# ----------------------------------------------------------------------------
-# 6. Run everything
-# ----------------------------------------------------------------------------
+
+# Run the whole SOTA fine tuning and evaluation
+
 all_results = {}
 for name in BACKBONES:
     model, history, boundary, epoch_times = train_two_phase(name)

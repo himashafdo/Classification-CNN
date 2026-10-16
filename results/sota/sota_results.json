@@ -10,8 +10,8 @@
     "size_mb_fp32_estimate": 12.35,
     "size_mb_tflite_fp32": 12.259017944335938,
     "size_mb_tflite_int8": 3.2495346069335938,
-    "avg_time_per_epoch_s": 7.47,
+    "avg_time_per_epoch_s": 12.51,
     "epochs_run": 30,
-    "host_latency_ms_per_image": 250.97
+    "host_latency_ms_per_image": 957.44
   }
 }
