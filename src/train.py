@@ -5,7 +5,7 @@ from tensorflow.keras import callbacks
 from sklearn.utils.class_weight import compute_class_weight
 import numpy as np
 
-from model_a_builds.model_a_8 import model_a
+from model_a_builds.model_a_7 import model_a
 
 TRAIN_VAL_DATA_DIR = Path("data/RealWaste_split")
 IMG_SIZE = (64, 64)
@@ -42,7 +42,7 @@ model_a.compile(
 )
 
 cbs = [
-    callbacks.ModelCheckpoint("results/model_a_version_8.keras",
+    callbacks.ModelCheckpoint("results/model_a_version_7.keras",
                               monitor="val_accuracy", save_best_only=True),
     callbacks.ReduceLROnPlateau(factor=0.5, patience=3, verbose=1),
     callbacks.EarlyStopping(patience=8, restore_best_weights=True),
@@ -52,3 +52,7 @@ history = model_a.fit(
     train_ds, validation_data=val_ds,
     epochs=50, class_weight=class_weights, callbacks=cbs
 )
+
+
+model_a.summary()
+

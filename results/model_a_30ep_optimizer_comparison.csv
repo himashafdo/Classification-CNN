@@ -1,0 +1,4 @@
+Optimizer,Best val-loss epoch,Min val loss,Final train loss,Final train acc,Best val acc,Test acc (best-loss weights),Epochs to val acc >= 70%,Time/epoch (s)
+Adam (lr=1e-3),30,0.6646,0.0716,0.9838,0.7798,0.7924,19,15.569
+SGD (lr=1e-2),29,0.9718,0.712,0.7508,0.6676,0.6676,not reached,15.4568
+SGD+Mom 0.9 (lr=1e-2),30,0.6555,0.2514,0.9107,0.7602,0.7475,21,15.3995
