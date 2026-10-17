@@ -16,10 +16,10 @@ from model_a_builds.model_a_7 import model_a
 from model_b_builds.model_b_3 import model_b   # adjust to your actual path
 
 # ---------------- Config ----------------
-MODEL_TAG   = "a"                                  # "a" or "b"
+MODEL_TAG   = "b"                                  # "a" or "b"
 BASE_MODEL  = model_a if MODEL_TAG == "a" else model_b
 RUN_NAME    = f"model_{MODEL_TAG}_30ep"            # must match the training run
-WEIGHT_TAGS = ["adam", "sgd", "sgd_mom_0.9"]       # add sweep tags if needed
+WEIGHT_TAGS = ["adam", "sgd", "sgd_mom_0.9", "sgd_mom_0.5", "sgd_mom_0.99"]      # add sweep tags if needed
 TEST_DIR    = Path("data/RealWaste_split/test")
 RESULTS_DIR = Path("results"); RESULTS_DIR.mkdir(exist_ok=True)
 IMG_SIZE, BATCH_SIZE = (64, 64), 64
