@@ -13,5 +13,20 @@
     "avg_time_per_epoch_s": 12.51,
     "epochs_run": 30,
     "host_latency_ms_per_image": 957.44
+  },
+  "EfficientNetB0": {
+    "test_accuracy": 0.8163,
+    "macro_precision": 0.8312,
+    "macro_recall": 0.8283,
+    "macro_f1": 0.8273,
+    "total_params": 4061100,
+    "trainable_params_after_finetune": 3923843,
+    "size_mb_keras_file": 46.31,
+    "size_mb_fp32_estimate": 15.49,
+    "size_mb_tflite_fp32": 15.359039306640625,
+    "size_mb_tflite_int8": 4.370109558105469,
+    "avg_time_per_epoch_s": 63.84,
+    "epochs_run": 39,
+    "host_latency_ms_per_image": 796.67
   }
 }
