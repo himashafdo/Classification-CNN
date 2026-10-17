@@ -21,7 +21,8 @@ BASE_MODEL  = model_a if MODEL_TAG == "a" else model_b
 RUN_NAME    = f"model_{MODEL_TAG}_30ep"            # must match the training run
 WEIGHT_TAGS = ["adam", "sgd", "sgd_mom_0.9"]       # add sweep tags if needed
 TEST_DIR    = Path("data/RealWaste_split/test")
-RESULTS_DIR = Path("results"); RESULTS_DIR.mkdir(exist_ok=True)
+WEIGHT_DIR= Path("results")
+RESULTS_DIR = Path("results/new"); RESULTS_DIR.mkdir(exist_ok=True)
 IMG_SIZE, BATCH_SIZE = (64, 64), 64
 
 # ---------------- Data ----------------
@@ -51,7 +52,7 @@ def plot_cm(cm, title, path):
 
 rows = []
 for tag in WEIGHT_TAGS:
-    weights_path = RESULTS_DIR / f"{RUN_NAME}_{tag}.weights.h5"
+    weights_path = WEIGHT_DIR / f"{RUN_NAME}_{tag}.weights.h5"
     if not weights_path.exists():
         print(f"Skipping {tag}: {weights_path} not found")
         continue
