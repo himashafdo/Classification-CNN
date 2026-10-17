@@ -8,21 +8,21 @@ from tensorflow.keras.utils import image_dataset_from_directory
 from sklearn.utils.class_weight import compute_class_weight
 
 from model_a_builds.model_a_7 import model_a
-from model_b_builds.model_b_3 import model_b   # adjust to your actual path
+from model_b_builds.model_b_3 import model_b   
 
 # ---------------- Config ----------------
-BASE_MODEL  = model_a        # or model_a
+BASE_MODEL  = model_a       
 MODEL_TAG   = "a"
-RUN_NAME    = f"model_{MODEL_TAG}_30ep"    # keeps outputs separate from the 50-epoch run
+RUN_NAME    = f"model_{MODEL_TAG}_30ep"    
 DATA_DIR    = Path("data/RealWaste_split")
 RESULTS_DIR = Path("results"); RESULTS_DIR.mkdir(exist_ok=True)
 IMG_SIZE, BATCH_SIZE = (64, 64), 64
 EPOCHS, SEED = 30, 42
 VAL_ACC_TARGET = 0.70
-RUN_MOMENTUM_SWEEP = False     # True adds SGD+Mom 0.5 and 0.99
+RUN_MOMENTUM_SWEEP = False     
 AUTOTUNE = tf.data.AUTOTUNE
 
-# ---------------- Data (same as train.py) ----------------
+# ---------------- Data ----------------
 train_ds = image_dataset_from_directory(DATA_DIR/"train", image_size=IMG_SIZE,
                                         batch_size=BATCH_SIZE, label_mode="int", seed=SEED)
 val_ds   = image_dataset_from_directory(DATA_DIR/"val", image_size=IMG_SIZE,
